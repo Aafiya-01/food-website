@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './images/logo2.jpeg';
+// import logo from './images/logo2.jpeg';
 
 class NavBar extends React.Component {
   render() {
@@ -7,7 +7,7 @@ class NavBar extends React.Component {
       <div className="bg-image-container">
           <ul className="nav-bar">
             <li>
-              <img src={logo} alt="Website Logo" className="logo" />
+              <img src='/images/logo2.jpeg' alt="Website Logo" className="logo" />
             </li>
             <li>
               <div className="search-bar">

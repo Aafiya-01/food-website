@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
-// import ReactDOM from 'react-dom/client';
-// const dummyData = require('./dummyData')
-// import paneerTikka from './images/IndianMainCoursePaneerTikkaMasala.jpeg';
-// import rasmalai from './images/Indian Dessert Rasmalai.jpeg';
-// import salad from './images/Italian Appetizer CapreseSalad.jpeg';
-// import Margaritta from './images/Italian MainCourse Margaritta.jpeg';
-// import teriyaki from './images/teriyaki.jpeg';
-// import bowl from './images/Bowl.jpeg';
 
 function Body() {
-    const [recipeCard, setRecipeCard] = useState([
+    const [recipeCard] = useState([
       {
         name: 'Paneer Tikka Masala',
         type:'Main Course',
@@ -88,57 +80,80 @@ function Body() {
       para2: 'Teriyaki chicken is a dish of chicken in a sweet and savory glaze made from soy sauce, sugar, and other ingredients. It can also include vegetables, fish, or lamb.',
       para3: 'Teriyaki chicken is a dish of chicken in a sweet and savory glaze made from soy sauce, sugar, and other ingredients. It can also include vegetables, fish, or lamb.',
     }
-    ])
+    ]);
+
+    const [filteredRecipes, setFilteredRecipes] = useState(recipeCard);
+
+    const handleFilterChange = (e) => {
+      const selectedCountry = e.target.value;
+      if (selectedCountry === 'All') {
+        setFilteredRecipes(recipeCard);
+      } else {
+        const filtered = recipeCard.filter((recipe) => recipe.country_origin === selectedCountry);
+        setFilteredRecipes(filtered);
+      }
+    };
 
     return (
             <div className='divBody'>
-              <div class="animetext">
-              <h1>Recipe Time, let's Cook!</h1>
-              </div>
+              <div class= 'animetxt'>
+                <h1>Recipe Time, let's Cook!</h1>
+                </div>
                 <div className='menuBar'>
                   <ul>
                     <li>All</li>
                     <li>Main Course</li>
                     <li>Appetizer</li>
                     <li>Dessert</li>
+                    <li>Side Dishes</li>
                   </ul>
-                  <div class="dropdown">
-                      <button class="dropbtn">Choose Country ▼ </button>
-                      <div class="dropdown-content">
-                        <a href="#">Indian</a>
-                        <a href="#">Italian</a>
-                        <a href="#">Swiss</a>
-                      </div>
+                  <div className="dropdown">
+                      <select className="dropbtn" onChange={handleFilterChange}>
+                          <option value='All'>All Countries</option>
+                          <option value="India">India</option>
+                          <option value="Italy">Italy</option>
+                          <option value="Switzerland">Switzerland</option>
+                          <option value="Australia">Australia</option>
+                       </select>
+                  </div>
+                  <div>
+                      <button class='ViewBookmark'>View Bookmarks</button>
                   </div>
                   <div>
                       <button class='ClearBookmark'>Clear Bookmarks</button>
                   </div>
               </div>
               <div className='Count'>
-                    <p>You have 'n' {} recipes to explore</p>
+                    <p>You have {filteredRecipes.length} recipes to explore</p>
               </div> 
             <div class="lowerBody">
                 {/* left side */}
-              <div class="Recipecontainer">
-                  {recipeCard.map((item,indx) => (
-                      <div class="Recipe1">
-                        <img src={item?.food_img} alt="paneer tikka" />
-                          <div class="RecipeDetails">
-                            <h4><b>{item?.name}</b></h4> 
-                            <p>Type: {item?.type}</p> 
-                            <p>Country of Origin: {item?.country_origin}</p> 
-                            <p>Category of Food: {item?.category_food}</p> 
-                            {/* <p><strong>Type:</strong> {item?.type}</p> 
-                            <p><strong>Country of Origin:</strong> {item?.country_origin}</p> 
-                            <p><strong>Category of Food:</strong> {item?.category_food}</p>  */}
+                <div class="Recipecontainer">
+                      {filteredRecipes.length > 0 ? (
+                        filteredRecipes.map((item, indx) => (
+                          <div key={indx} class="Recipe1">
+                            <img src={item.food_img} alt={item.name} />
+                            <div class="RecipeDetails">
+                              <h4>
+                                <b>{item?.name}</b>
+                              </h4>
+                              <p>Type: {item?.type}</p>
+                              <p>Country of Origin: {item?.country_origin}</p>
+                              <hr className="line"></hr>
+                            </div>
+                            <div className="CardFooter">
+                              <img className="like" src={item.like} alt="like icon" />
+                              <img className="comment" src={item.comment} alt="comment icon" />
+                              <img className="save" src={item.save} alt="save icon" />
+                            </div>
                           </div>
-                          <div className='CardFooter'>
-                              <img className='like' src={item.like} alt="like" />
-                              <img className='comment' src={item.comment} alt="comment" />
-                              <img className='save' src={item.save} alt="save" />
-                          </div>
-                      </div>))}
-              </div>
+                        ))
+                      ) : (
+                        <h2>No recipes found</h2>
+                      )}
+                  </div>
+
+              
                {/* right side */}
                 <div class="DayWiseContainer">
                   {DayWiseCard.map((item, indx) =>(
@@ -154,7 +169,6 @@ function Body() {
                       </div>))}
                 </div>
               </div>
-                {/* {console.log("dummyData", dummyData.key)} */}
           </div>
       );
   }
