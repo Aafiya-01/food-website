@@ -16,41 +16,6 @@ body{
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .bg-image-container {
   background-image: url('/public/images/upperImage.png'); 
   background-size: cover;
@@ -58,7 +23,17 @@ body{
   background-position: center;
   height: 405px;
   width: 100%;
+  /* position: relative; */
+}
+.logoContainer{
   position: relative;
+}
+.logo{
+  height: 70px;
+  margin-top: -19px;
+  left: -68px;
+  position: absolute;
+  
 }
 
 .nav-bar{
@@ -70,11 +45,28 @@ body{
   margin-top: 0px;
   padding: 54px;
 }
-.logo{
-  height: 70px;
-  margin-top: -18px;
-  margin-right: 10px;
+
+.logo:hover{
+  animation: seeSaw 1s 1;
+  animation-timing-function: linear;
+  /* animation: moveUpwards 1s 1; */
+  /* animation-timing-function: ease-in-out; */
 }
+@keyframes seeSaw {
+   0% { 
+       /* transform: rotate(15deg); */
+      top: 0px;
+   } 
+   50% { 
+       /* transform: rotate(-15deg);  */
+       top: -6px;
+   } 
+   100% { 
+       /* transform: rotate(15deg);  */
+       top: 0px;
+   } 
+}
+
 .signUp, .logIn{
   list-style-type: none;
   /* border: 0.75px solid black; */
@@ -91,17 +83,35 @@ body{
   background-color: white !important;
 }
 
+.search-bar{
+  position: relative;
+}
+
 input[type=search]{
   width: 383px;
-    height: 44px;
-    padding: 8px;
-    margin-right: 85px;
-    border-radius: 30px;
-    background-color: rgb(255, 233, 213);
-    border: none;
+  height: 44px;
+  padding: 9px 16px;
+  padding-left: 42px;
+  margin-right: 85px;
+  border-radius: 30px;
+  background-color: rgb(255, 233, 213);
+  border: none;
+}
+
+.searchIcon{
+  position: absolute;
+  z-index: 1;
+  width: 20px;
+  top: 12px;
+  left: 15px;
+}
+
+input[type=search]:hover{
+  background-color: rgba(218, 141, 102, 0.718);
 }
 input[type=search]:focus{
-background-color: white;
+  background-color: white;
+  border: none;
 }
 
 .bg-image-container h1{
@@ -114,36 +124,39 @@ background-color: white;
 .divBody{
   display: flex;
   flex-direction: column;
-  
+  margin-top: 150px;
 }
  
 /* LETSSS COOKKK */
 
-
 .animetxt{
-  /* position: relative; */
+  position: relative;
 }
+
 .divBody h1{
   font-size: 110px;
-  margin: 28px;
-  color:black;
-  /* position: absolute ; */
-  /* animation: anime 2s;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease; */
+  margin: 1px;
+  color: black;
+  position: absolute;
+  top: -134px;
+  left: 250px;
+}
+.divBody h1:hover{
+  animation: anime 2s 1;
+  animation-timing-function: ease;
 }
 
-/* @keyframes anime {
-  from {left: 0px; opacity: 0;}
-  to {left: 500px; opacity: 1;}
-} */
+@keyframes anime {
+  from {left: -200px; opacity: 0;}
+  to {left: 200px; opacity: 1;}
+}
 
 .menuBar{
-    align-items: center;
-    display: flex;
-    justify-content: end;
-    margin-top: 40px;
-    gap: 13px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+  gap: 14px;
 }
 
 .welomeColor{
@@ -226,7 +239,7 @@ background-color: white;
 
 .Count{
   text-align: left;
-  margin: 25px 121px;
+  margin: 28px 71px;
   color: rgb(137, 126, 126);
   font-weight: 100;
 }
@@ -247,8 +260,6 @@ background-color: white;
   border-radius: 50px;
   color: white;
   background-color: rgb(223, 18, 18);
-  margin: 0;
-  margin-right: 20px;
 }
 
 .ClearBookmark:hover{
@@ -257,34 +268,25 @@ background-color: white;
 
 .lowerBody {
   display: flex;
-  gap: 40px;
+  /* gap: 40px; */
   width: 100%;
   justify-content: space-around;
   margin: 44px 0px;
 }
 .Recipecontainer{
-  /* padding: 12px; */
   display: flex;
-  align-items: center;
-  gap: 40px;
-  /* margin-top: 30px; */
+  gap: 39px;
   flex-wrap: wrap;
-  width: 55%;
-  justify-content: flex-end;
+  width: 52%;
+  justify-content: flex-start;
 }
 
 .Recipe1 {
-  /* background-color: white; */
-  /* box-shadow: 0 4px 8px 0 rgba(245, 193, 104, 0.482); */
-  /* transition: 0.3s;
-  width: 230px;
-  min-height: 320px; */
   display: flex;
   background-color: rgb(208 162 148);
-  /* background-color: white; */
   transition: 0.3s;
   width: 191px;
-  min-height: 290px;
+  height: 290px;
   padding: 23px;
   padding-bottom: 11px;
   border-radius: 5px;
@@ -328,6 +330,15 @@ background-color: white;
   justify-content: space-evenly !important;
   gap: 48px;
 }
+.CardFooter button{
+  border: none;
+  background-color: rgb(208 162 148)
+}
+.CardFooter button:focus{
+  border: none;
+  /* background-color: rgb(170, 102, 82) */
+  /* box-shadow: 0 8px 16px 0 rgb(138 49 22 / 79%); */
+}
 .CardFooter img{
   width: 28px;
   height: 25px;
@@ -335,16 +346,6 @@ background-color: white;
   box-shadow: none;
   padding: 0px;
 }
-
-/* .like:hover{
-
-}
-.comment:hover{
-
-}
-.save:hover{
-
-} */
 
 .DayWiseContainer{
   display: flex;
@@ -402,8 +403,9 @@ background-color: white;
   margin: 50px -200px;
   width: 100%;
 }
+
 .ImgComponent img{
-  width: 625px;
+  width: 651px;
   animation: chickpeaBowl 5s infinite;
   /* animation-timing-function: ease; */
 }
@@ -422,8 +424,8 @@ background-color: white;
 }
 
 .TextComponent {
-  margin-left: 193px;
-  margin-top: 65px;
+  margin-left: 154px;
+  margin-top: 106px;
 }
 .TextComponent h1{
   font-size: 125px;

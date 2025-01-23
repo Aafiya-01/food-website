@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Body() {
-    const [recipeCard] = useState([
+    const [recipeCard, setRecipeCard] = useState([
       {
         name: 'Paneer Tikka Masala',
         type:'Main Course',
@@ -10,7 +10,8 @@ function Body() {
         food_img:'/images/IndianMainCoursePaneerTikkaMasala.jpeg',
         like: '/images/like.png',
         comment: '/images/comment.png',
-        save: '/images/bookmark.png'
+        save: '/images/bookmark.png',
+        saved: false
       },
       {
         name: 'Rasmalai',
@@ -20,7 +21,8 @@ function Body() {
         food_img:'/images/Indian Dessert Rasmalai.jpeg',
         like: '/images/like.png',
         comment: '/images/comment.png',
-        save: '/images/bookmark.png'
+        save: '/images/bookmark.png',
+        saved: false
       },
       {
         name: 'Margherita',
@@ -30,6 +32,7 @@ function Body() {
         food_img:'/images/Italian MainCourse Margaritta.jpeg',
         like: '/images/like.png',
         comment: '/images/comment.png',
+        saved: false,
         save: '/images/bookmark.png'
       },
       {
@@ -40,6 +43,7 @@ function Body() {
         food_img:'/images/Italian MainCourse Margaritta.jpeg',
         like: '/images/like.png',
         comment: '/images/comment.png',
+        saved: false,
         save: '/images/bookmark.png'
       },  
       {
@@ -50,6 +54,7 @@ function Body() {
         food_img:'/images/IndianMainCoursePaneerTikkaMasala.jpeg',
         like: '/images/like.png',
         comment: '/images/comment.png',
+        saved: false,
         save: '/images/bookmark.png'
       },
       {
@@ -60,6 +65,7 @@ function Body() {
         food_img:'/images/Italian Appetizer CapreseSalad.jpeg',
         like: '/images/like.png',
         comment: '/images/comment.png',
+        saved: false,
         save: '/images/bookmark.png'
       } 
     ])
@@ -84,6 +90,31 @@ function Body() {
 
     const [filteredRecipes, setFilteredRecipes] = useState(recipeCard);
 
+    useEffect(() => {
+      const savedRecipes = JSON.parse(localStorage.getItem('bookmarkedRecipes'));
+      if (savedRecipes) {
+          setRecipeCard((prev) =>
+              prev.map((recipe) => ({
+                  ...recipe,
+                  saved: savedRecipes.some((saved) => saved.name === recipe.name),
+              }))
+            );
+        }
+      }, []);
+
+      const saveBookmarksToLocalStorage = (recipes) => {
+        const bookmarkedRecipes = recipes.filter((recipe) => recipe.saved);
+        localStorage.setItem('bookmarkedRecipes', JSON.stringify(bookmarkedRecipes));
+       };  
+
+    const handleSaveClick = (index) => {
+      const updatedRecipes = [...recipeCard];
+      updatedRecipes[index].saved = !updatedRecipes[index].saved; 
+      setRecipeCard(updatedRecipes);
+      setFilteredRecipes(updatedRecipes); 
+      saveBookmarksToLocalStorage(updatedRecipes);
+    };
+
     const handleFilterChange = (e) => {
       const selectedCountry = e.target.value;
       if (selectedCountry === 'All') {
@@ -94,11 +125,23 @@ function Body() {
       }
     };
 
+    const handleViewBookmarks = () => {
+      const bookmarkedRecipes = recipeCard.filter((recipe) => recipe.saved);
+      setFilteredRecipes(bookmarkedRecipes);
+    };
+
+    const handleClearBookmarks = () => {
+      const updatedRecipes = recipeCard.map((recipe) => ({ ...recipe, saved: false }));
+      setRecipeCard(updatedRecipes);
+      setFilteredRecipes(updatedRecipes);
+      localStorage.removeItem('bookmarkedRecipes');
+     };
+
     return (
             <div className='divBody'>
               <div class= 'animetxt'>
                 <h1>Recipe Time, let's Cook!</h1>
-                </div>
+              </div>
                 <div className='menuBar'>
                   <ul>
                     <li>All</li>
@@ -142,9 +185,18 @@ function Body() {
                               <hr className="line"></hr>
                             </div>
                             <div className="CardFooter">
-                              <img className="like" src={item.like} alt="like icon" />
-                              <img className="comment" src={item.comment} alt="comment icon" />
-                              <img className="save" src={item.save} alt="save icon" />
+                              <button>
+                                <img id="like" src={item.like} alt="like icon" />
+                              </button>
+                              <button>
+                                <img id="comment" src={item.comment} alt="comment icon" />
+                              </button>
+                              <button onClick = {() => handleSaveClick(indx)}>
+                                  <img 
+                                    id="save" 
+                                    src={item.saved ? '/images/bookmark-black.png' : '/images/bookmark.png' } 
+                                    alt="save icon" />
+                              </button>
                             </div>
                           </div>
                         ))
